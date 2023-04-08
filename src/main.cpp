@@ -4,6 +4,9 @@
 #include <userver/server/handlers/http_handler_base.hpp>
 #include <userver/utils/daemon_run.hpp>
 
+#include <userver/storages/postgres/cluster.hpp>
+#include <userver/storages/postgres/component.hpp>
+
 class TestHandler final : public server::handlers::HttpHandlerBase
 {
 public:

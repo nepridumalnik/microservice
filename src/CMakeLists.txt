@@ -5,11 +5,13 @@ set(SOURCES
 )
 
 set(INCLUDE_DIRECTORIES
-    ${CMAKE_SOURCE_DIR}/userver/core
+    ${CMAKE_SOURCE_DIR}/userver/core/include
+    ${CMAKE_SOURCE_DIR}/userver/postgresql/include
 )
 
 set(LIBARIES
     userver-core
+    userver-postgresql
 )
 
 add_executable(${TARGET} ${SOURCES})
