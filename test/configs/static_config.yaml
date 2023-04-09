@@ -35,9 +35,24 @@ components_manager:
         dynamic-config:                      # Dynamic config storage options, do nothing
             fs-cache-path: ''
         dynamic-config-fallbacks:            # Load options from file and push them into the dynamic config storage.
-            fallback-path: /etc/hello_service/dynamic_config_fallback.json
+            fallback-path: /workspaces/microservice/test/configs/dynamic_config_fallback.json
 
-        handler-hello-sample:             # Finally! Our handler.
+        handler-key-value:             # Finally! Our handler.
             path: /hello                  # Registering handler by URL '/hello'.
             method: GET,POST              # It will only reply to GET (HEAD) and POST requests.
             task_processor: main-task-processor  # Run it on CPU bound task processor
+
+        key-value-database:
+            dbconnection: 'postgresql://postgres:password@postgres:5432/postgres'
+            blocking_task_processor: fs-task-processor
+            dns_resolver: async
+            sync-start: true
+            user-types-enabled: false
+            max_pool_size: 1000
+            max_queue_size: 200
+            min_pool_size: 1
+
+        dns-client:
+            fs-task-processor: fs-task-processor
+
+        testsuite-support:
