@@ -55,7 +55,23 @@ private:
     std::string getValue(const server::http::HttpRequest &req,
                          server::request::RequestContext &ctx) const
     {
-        return {};
+        const std::vector<std::string> args = req.ArgNames();
+
+        std::string res;
+
+        for(size_t i = 0; i < args.size(); ++i)
+        {
+            res += args[i];
+            res += ": ";
+            res += req.GetArg(args[i]);
+
+            if(i != (args.size() - 1))
+            {
+                res += '\n';
+            }
+        }
+
+        return res;
     }
 
     std::string postValue(const server::http::HttpRequest &req,
