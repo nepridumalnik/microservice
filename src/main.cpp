@@ -23,7 +23,7 @@ public:
     static constexpr std::string_view kName = "handler-hello-sample";
 };
 
-int main(int argc, char *argv[])
+int main(int argc, char const *argv[])
 {
     const auto component_list =
         components::MinimalServerComponentList().Append<TestHandler>();
