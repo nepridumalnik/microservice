@@ -15,9 +15,9 @@ class TestHandler final : public server::handlers::HttpHandlerBase
 {
 public:
     TestHandler(const components::ComponentConfig &config,
-                const components::ComponentContext &context)
-        : server::handlers::HttpHandlerBase{config, context},
-          pgCluster_{context.FindComponent<components::Postgres>(KeyValueDataBase)
+                const components::ComponentContext &ctx)
+        : server::handlers::HttpHandlerBase{config, ctx},
+          pgCluster_{ctx.FindComponent<components::Postgres>(KeyValueDataBase)
                          .GetCluster()}
     {
         static constexpr char createTable[] = "CREATE TABLE IF NOT EXISTS key_value_table ("
@@ -29,15 +29,48 @@ public:
     }
 
     std::string HandleRequestThrow(const server::http::HttpRequest &req,
-                                   server::request::RequestContext &context) const override
+                                   server::request::RequestContext &ctx) const final
     {
-        static const std::string respond = "Hello world!";
-        return respond;
+        switch (req.GetMethod())
+        {
+        case server::http::HttpMethod::kGet:
+            return getValue(req, ctx);
+
+        case server::http::HttpMethod::kPost:
+            return postValue(req, ctx);
+
+        case server::http::HttpMethod::kDelete:
+            return deleteValue(req, ctx);
+
+        default:
+            throw server::handlers::ClientError{server::handlers::ExternalBody{
+                fmt::format("Unsupported method {0}", req.GetMethod())}};
+        }
     }
 
 public:
     static constexpr std::string_view kName = "handler-key-value";
 
+private:
+    std::string getValue(const server::http::HttpRequest &req,
+                         server::request::RequestContext &ctx) const
+    {
+        return {};
+    }
+
+    std::string postValue(const server::http::HttpRequest &req,
+                          server::request::RequestContext &ctx) const
+    {
+        return {};
+    }
+
+    std::string deleteValue(const server::http::HttpRequest &req,
+                            server::request::RequestContext &ctx) const
+    {
+        return {};
+    }
+
+private:
     storages::postgres::ClusterPtr pgCluster_;
 };
 

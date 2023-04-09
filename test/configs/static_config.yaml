@@ -39,7 +39,7 @@ components_manager:
 
         handler-key-value:             # Finally! Our handler.
             path: /hello                  # Registering handler by URL '/hello'.
-            method: GET,POST              # It will only reply to GET (HEAD) and POST requests.
+            method: GET,POST,DELETE              # It will only reply to GET (HEAD) and POST requests.
             task_processor: main-task-processor  # Run it on CPU bound task processor
 
         key-value-database:
