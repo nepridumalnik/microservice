@@ -25,7 +25,8 @@ public:
 
 int main(int argc, char const *argv[])
 {
-    const auto component_list =
-        components::MinimalServerComponentList().Append<TestHandler>();
+    auto component_list = components::MinimalServerComponentList();
+    component_list.Append<TestHandler>();
+
     return utils::DaemonMain(argc, argv, component_list);
 }
